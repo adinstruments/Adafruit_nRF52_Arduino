@@ -683,6 +683,23 @@ extern "C" void SD_EVT_IRQHandler(void)
 #endif
 }
 
+extern "C"
+{
+//ADI: Support hooking the soc_task
+typedef void (* soc_evt_hook_t)(uint32_t);
+
+soc_evt_hook_t gSOCEvtHookPtr = NULL;
+
+soc_evt_hook_t setSOCEvtHook(soc_evt_hook_t hookFunc)
+{
+soc_evt_hook_t old = gSOCEvtHookPtr;
+gSOCEvtHookPtr = hookFunc;
+return old;
+}
+
+}//extern "C"
+
+
 /**
  * Handle SOC event such as FLASH operation
  */
@@ -726,7 +743,12 @@ void adafruit_soc_task(void* arg)
             break;
             #endif
 
-            default: break;
+            default: 
+               { //ADI: Support hooking the soc_task
+               if(gSOCEvtHookPtr)
+                  gSOCEvtHookPtr(soc_evt);
+               break;
+               }
           }
         }
       }
