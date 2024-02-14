@@ -37,6 +37,9 @@
 #define NRFX_TIMER2_ENABLED 0
 #define NRFX_TIMER3_ENABLED 0
 
+//ADI added
+#define NRFX_PPI_ENABLED 1
+
 #ifdef NRF52840_XXAA
   #define NRFX_QSPI_ENABLED   1
   #define NRFX_SPIM3_ENABLED  1
