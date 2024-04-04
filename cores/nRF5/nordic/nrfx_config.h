@@ -39,6 +39,7 @@
 
 //ADI added
 #define NRFX_PPI_ENABLED 1
+#define NRFX_SAADC_ENABLED 1
 
 #ifdef NRF52840_XXAA
   #define NRFX_QSPI_ENABLED   1
