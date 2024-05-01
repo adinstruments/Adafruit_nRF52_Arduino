@@ -725,7 +725,11 @@ bool BLECharacteristic::notify(uint16_t conn_hdl, const void* data, uint16_t len
     while ( remaining )
     {
       // Failed if there is no free buffer
-      if ( !conn->getHvnPacket() ) return false;
+      if ( !conn->getHvnPacket() ) 
+         {
+         LOG_LV1("CHR", "Notify failed at !conn->getHvnPacket()");
+         return false;
+         }
 
       uint16_t packet_len = min16(max_payload, remaining);
 
@@ -753,6 +757,7 @@ bool BLECharacteristic::notify(uint16_t conn_hdl, const void* data, uint16_t len
   else
   {
     write(data, remaining);
+    LOG_LV1("CHR", "notifyEnabled(conn_hdl) returned false.");
     return false;
   }
 
